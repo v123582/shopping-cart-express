@@ -1,0 +1,66 @@
+
+<div class="row">
+  <div class="col-md-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Quantily</th>
+          <th scope="col">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each order.items}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td>{{this.OrderItem.quantily}}</td>
+          <td>{{this.price}}</td>
+        </tr>
+        {{/each}}
+        <tr>
+          <td></td>
+          <td style="text-align: right;"><h4>Total: </h4></td>
+          <td><h4>{{order.amount}}</h4></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul>
+    <li>{{order.id}}</li>
+    <li>name: {{order.name}}</li>
+    <li>address: {{order.address}}</li>
+    <li>phone: {{order.phone}}</li>
+    <li>shipping_status: {{order.shipping_status}}</li>
+    <li>payment_status: {{order.payment_status}}</li>
+  </ul>
+
+  <form action="/admin/orders/{{order.id}}?_method=PUT" method="POST">
+      <div class="form-group">
+        <label for="payment_status">Payment Status</label>
+        <select class="form-control" id="payment_status" name="payment_status">
+          <option value="-1" >取消</option>
+          <option value="0">未付款</option>
+          <option value="1" >已付款</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Shipping Status</label>
+        <select class="form-control" id="shipping_status" name="shipping_status">
+          <option value="-1">取消</option>
+          <option value="0">未出貨</option>
+          <option value="1">已出貨</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+
+</div>
+
+<script type="text/javascript">
+    document.getElementById('payment_status').value = "{{order.payment_status}}";
+    document.getElementById('shipping_status').value = "{{order.shipping_status}}";
+</script>
+
+
