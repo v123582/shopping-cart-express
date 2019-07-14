@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const db = require('../models')
 const crypto = require("crypto")
 const Order = db.Order
@@ -11,17 +13,16 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: '',
-    pass: '',
+    user: process.env.GMAIL_ACCOUNT,
+    pass: process.env.GMAIL_PASSWORD,
   },
 });
 
+let URL = process.env.URL
 
-let URL = ''
-
-let MerchantID = ''
-let HashKey = ""
-let HashIV = ""
+let MerchantID = process.env.MERCHANT_ID
+let HashKey = process.env.HASH_KEY
+let HashIV = process.env.HASH_IV
 let PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway"
 let ReturnURL = URL+"/spgateway/callback?from=ReturnURL"
 let NotifyURL = URL+"/spgateway/callback?from=NotifyURL"
@@ -94,7 +95,7 @@ function getTradeInfo(Amt, Desc, email){
 
 let productController = {
   getOrders: (req, res) => {
-    Order.findAll({include: 'items'}).then(orders => {
+    Order.findAll({where: {UserId: req.user.id}, include: 'items'}).then(orders => {
 
       orders = orders.map(order => ({
         ...order.dataValues, 
@@ -113,6 +114,7 @@ let productController = {
         shipping_status: req.body.shipping_status,
         payment_status: req.body.payment_status,
         amount: req.body.amount,
+        UserId: req.user.id,
       }).then(order => {
 
         var results = [];
@@ -129,8 +131,8 @@ let productController = {
         }
 
         var mailOptions = {
-          from: 'v123582@gmail.com',
-          to: 'v123582+1@gmail.com',
+          from: process.env.GMAIL_ACCOUNT,
+          to: req.user.email,
           subject: 'Sending Email using Node.js',
           text: `${order.id} 訂單成立`,
         };
@@ -162,7 +164,7 @@ let productController = {
   },
   getPayment: (req, res) => {
     return Order.findByPk(req.params.id, {}).then(order => {
-      const tradeInfo = getTradeInfo(order.amount, '產品名稱', 'v123582@gmail.com')
+      const tradeInfo = getTradeInfo(order.amount, '產品名稱',  req.user.email)
       order.update({
         ...req.body,
         sn: tradeInfo.MerchantOrderNo,
@@ -182,8 +184,8 @@ let productController = {
       }).then(order => {
         
         var mailOptions = {
-          from: 'v123582@gmail.com',
-          to: 'v123582+1@gmail.com',
+          from: process.env.GMAIL_ACCOUNT,
+          to: req.user.email,
           subject: 'Sending Email using Node.js',
           text: `${orders[0].id} 訂單付款成功`,
         };

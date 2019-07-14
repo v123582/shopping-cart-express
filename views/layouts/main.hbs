@@ -17,12 +17,18 @@
         <a href="/products">Company name</a>
       </h5>
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/admin/products">Admin</a>
+        {{#ifCond user.role 'admin'}}
+          <a href="/admin/products" style="color: white;margin-right: 10px;">Admin 後台</a>
+        {{/ifCond}}
         <a class="p-2 text-dark" href="/cart">Cart</a>
         <a class="p-2 text-dark" href="/orders">Order</a>
       </nav>
-      <a class="btn btn-outline-primary" href="#">Login</a>
-      <a class="btn btn-outline-primary" href="#">Logout</a>
+      {{#if user}}
+        <span style="margin: 10px;">{{user.email}}</span>
+        <a class="btn btn-outline-primary" href="/logout">Logout</a>
+      {{else}}
+        <a class="btn btn-outline-primary" href="/signin">Login</a>
+      {{/if}}
     </div>
 
     <div class="container-fluid">
