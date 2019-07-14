@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <th scope="col">Product</th>
-          <th scope="col">Quantily</th>
+          <th scope="col">quantity</th>
           <th scope="col">Subtotal</th>
         </tr>
       </thead>
@@ -13,7 +13,7 @@
         {{#each order.items}}
         <tr>
           <td>{{this.name}}</td>
-          <td>{{this.OrderItem.quantily}}</td>
+          <td>{{this.OrderItem.quantity}}</td>
           <td>{{this.price}}</td>
         </tr>
         {{/each}}

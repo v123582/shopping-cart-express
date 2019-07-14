@@ -20,7 +20,7 @@ let productController = {
 
       return Cart.findByPk(req.session.cartId, {include: 'items'}).then(cart => {
         cart = cart || {items: []}
-        let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantily).reduce((a, b)=>a+b) : 0
+        let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantity).reduce((a, b)=>a+b) : 0
 
         return res.render('products', {products, totalPrice, page, pages, totalPage, prev, next, cart})
       })
@@ -30,7 +30,7 @@ let productController = {
     return Product.findByPk(req.params.id, {}).then(product => {
       return Cart.findByPk(req.session.cartId, {include: 'items'}).then(cart => {
         cart = cart || {items: []}
-        let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantily).reduce((a, b)=>a+b) : 0
+        let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantity).reduce((a, b)=>a+b) : 0
 
         return res.render('product', {product, totalPrice, cart})
       })

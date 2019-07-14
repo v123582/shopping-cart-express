@@ -6,7 +6,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Price</th>
-        <th scope="col">Quantily</th>
+        <th scope="col">quantity</th>
         <th scope="col">Subtotal</th>
         <th scope="col">#</th>
       </tr>
@@ -27,14 +27,14 @@
               <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
             </form>
             <span style="margin: 0 20px;">
-              {{this.CartItem.quantily}}
+              {{this.CartItem.quantity}}
             </span>
             <form action="/cartItem/{{this.CartItem.id}}/sub" method="POST">
               <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
             </form>
           </div>
         </td>
-        <td>{{this.price}} * {{this.CartItem.quantily}}</td>
+        <td>{{this.price}} * {{this.CartItem.quantity}}</td>
         <td>
           <form action="/cartItem/{{this.CartItem.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-link">

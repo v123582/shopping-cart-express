@@ -8,7 +8,7 @@ let cartController = {
   getCart: (req, res) => {
     return Cart.findByPk(req.session.cartId, {include: 'items'}).then(cart => {
       cart = cart || {items: []}
-      let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantily).reduce((a, b)=>a+b) : 0
+      let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantity).reduce((a, b)=>a+b) : 0
 
       return res.render('cart', {cart, totalPrice})
     })
@@ -30,7 +30,7 @@ let cartController = {
         }
       }).spread(function(cartItem, created){
         return cartItem.update({
-          quantily: (cartItem.quantily || 0)+1,
+          quantity: (cartItem.quantity || 0)+1,
         })
         .then((cartItem) => {
           req.session.cartId = cart.id
@@ -44,7 +44,7 @@ let cartController = {
   addCartItem: (req, res) => {
     CartItem.findByPk(req.params.id).then(cartItem => {
       cartItem.update({
-          quantily: cartItem.quantily+1,
+          quantity: cartItem.quantity+1,
       })
       .then((cartItem) => {
         return res.redirect('back')
@@ -54,7 +54,7 @@ let cartController = {
   subCartItem: (req, res) => {
     CartItem.findByPk(req.params.id).then(cartItem => {
       cartItem.update({
-          quantily: cartItem.quantily-1 >= 1 ? cartItem.quantily-1 : 1,
+          quantity: cartItem.quantity-1 >= 1 ? cartItem.quantity-1 : 1,
       })
       .then((cartItem) => {
         return res.redirect('back')

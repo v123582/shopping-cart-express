@@ -20,7 +20,7 @@ module.exports = {
         amount: faker.random.number(),
         sn: faker.random.number(),
         payment_method: Math.floor(Math.random() * 3)+1,
-        pay_at: new Date(),
+        paid_at: new Date(),
         params: null,
         OrderId: Math.floor(Math.random() * 3)+1,
         createdAt: new Date(),

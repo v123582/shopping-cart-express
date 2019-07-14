@@ -99,7 +99,7 @@ let productController = {
 
       orders = orders.map(order => ({
         ...order.dataValues, 
-        // totalPrice: order.items.map(d => d.price * d.OrderItem.quantily).reduce((a, b) => a+b)
+        // totalPrice: order.items.map(d => d.price * d.OrderItem.quantity).reduce((a, b) => a+b)
       }))
 
       return res.render('orders', {orders})
@@ -125,7 +125,7 @@ let productController = {
                   OrderId: order.id,
                   ProductId: cart.items[i].id,
                   price: cart.items[i].price,
-                  quantily: cart.items[i].CartItem.quantily,
+                  quantity: cart.items[i].CartItem.quantity,
                 })
             );
         }

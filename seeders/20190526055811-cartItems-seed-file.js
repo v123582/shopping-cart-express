@@ -17,7 +17,7 @@ module.exports = {
       ({
         CartId: Math.floor(Math.random() * 3)+1,
         ProductId: Math.floor(Math.random() * 50)+1,
-        quantily: Math.floor(Math.random() * 10)+1,
+        quantity: Math.floor(Math.random() * 10)+1,
         createdAt: new Date(),
         updatedAt: new Date(),
       })
