@@ -22,7 +22,7 @@
     "nodemailer": "^6.2.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^5.8.6",
+    "sequelize": "^5.15.1",
     "session": "^0.1.0"
   }
 }
